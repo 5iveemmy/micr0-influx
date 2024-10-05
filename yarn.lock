@@ -2606,6 +2606,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "micro-influx@workspace:."
   dependencies:
+    "@ant-design/icons": "npm:^5.5.1"
     "@eslint/js": "npm:^9.11.1"
     "@types/node": "npm:^22.7.4"
     "@types/react": "npm:^18.3.10"
