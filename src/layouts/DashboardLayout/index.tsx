@@ -8,21 +8,21 @@ interface Props {
   noHeader?: boolean;
 }
 
-const DashboardLayout = ({ children, noHeader }: Props) => {
+const DashboardLayout = ({ children }: Props) => {
   return (
     <Layout style={{ height: `calc(100vh + 44px)` }}>
       <Sidebar />
 
       <Layout className="lg:ml-80 bg-#FAFAFA min-h-full">
-        <div
+        {/* <div
           className={`${
             noHeader ? "hidden" : "flex"
           } justify-end items-center px-10 py-4`}
         >
           <h2>ayoo</h2>
-        </div>
+        </div> */}
 
-        <Content className="p-5 lg:p-20">{children}</Content>
+        <Content className="pl-6 pt-10 pr-10">{children}</Content>
       </Layout>
     </Layout>
   );
