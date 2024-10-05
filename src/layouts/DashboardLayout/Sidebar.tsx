@@ -23,7 +23,7 @@ const CampaignShortcuts = ({ image, text }: CampaignShortcutsProps) => (
       }}
       src={image}
     />
-    <p className="truncate max-w-[180px]">{text}</p>
+    <p className=" truncate max-w-[180px]">{text}</p>
     <CustomImage src="/arrowRight.svg" />
   </div>
 );
@@ -63,9 +63,27 @@ const Sidebar = () => {
     },
   ];
 
+  const menuItems = navList.map(({ text, icon, path }) => ({
+    key: text,
+    icon,
+    label: text,
+    onClick: () => navigate(path),
+    style: {
+      backgroundColor: location.pathname.startsWith(path) ? "#053559" : "",
+      color: location.pathname.startsWith(path) ? "white" : "",
+      gap: "16px",
+      paddingRight: "16px",
+      paddingLeft: "16px",
+      marginLeft: "0px",
+      marginRight: "0px",
+      marginTop: "6px",
+      width: "100%",
+    },
+  }));
+
   return (
     <div
-      className="hidden lg:block bg-white fixed  w-80 py-10 px-10 "
+      className="hidden lg:block bg-white fixed w-80 py-10 px-10"
       style={{
         height: `calc(100vh - 44px)`,
         zIndex: 1,
@@ -92,36 +110,12 @@ const Sidebar = () => {
             defaultSelectedKeys={["1"]}
             className="m-0"
             style={{ border: "none" }}
-          >
-            {navList.map(({ text, icon, path }) => {
-              const isActive = location.pathname.startsWith(path);
-              return (
-                <Menu.Item
-                  key={text}
-                  icon={icon}
-                  style={{
-                    backgroundColor: isActive ? "#053559" : "",
-                    color: isActive ? "white" : "",
-                    gap: "16px",
-                    paddingRight: "16px",
-                    paddingLeft: "16px",
-                    marginLeft: "0px",
-                    marginRight: "0px",
-                    marginTop: "6px",
-                    width: "100%",
-                  }}
-                  onClick={() => navigate(path)}
-                >
-                  {text}
-                </Menu.Item>
-              );
-            })}
-          </Menu>
+            items={menuItems}
+          />
         </div>
         <div>
           <div className="flex justify-between pb-3">
             <p className="font-medium">Campaign Shortcuts</p>
-
             <Button
               style={{
                 backgroundColor: "#E7F5FF",
