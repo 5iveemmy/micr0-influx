@@ -1,4 +1,4 @@
-import { Avatar, Button, Menu } from "antd";
+import { Avatar, Button, Flex, Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import HouseIcon from "@/icons/HouseIcon";
 import SettingsIcon from "@/icons/SettingsIcon";
@@ -13,7 +13,11 @@ interface CampaignShortcutsProps {
 }
 
 const CampaignShortcuts = ({ image, text }: CampaignShortcutsProps) => (
-  <div className="flex justify-between items-center">
+  <Flex
+    justify="space-between"
+    align="center"
+    className="p-2 rounded-md transition-all duration-300 hover:bg-gray-100 hover:shadow-lg hover:cursor-pointer"
+  >
     <CustomImage
       width="24px"
       height="24px"
@@ -25,7 +29,7 @@ const CampaignShortcuts = ({ image, text }: CampaignShortcutsProps) => (
     />
     <p className=" truncate max-w-[180px]">{text}</p>
     <CustomImage src="/arrowRight.svg" />
-  </div>
+  </Flex>
 );
 
 const Sidebar = () => {
@@ -90,19 +94,19 @@ const Sidebar = () => {
         boxShadow: "0px 0px 20px 0px #0000001A",
       }}
     >
-      <div className="flex justify-between flex-col h-full">
+      <Flex justify="space-between" className="flex-col h-full">
         <div>
           <div>
             <h1 className="text-lg font-bold">Micro-Influx</h1>
             <div className="gap-0.5 flex pt-4 pb-3">
               <Avatar src="/profile.png" shape="square" size={48} />
-              <div className="flex justify-between w-full">
+              <Flex justify="space-between" className=" w-full">
                 <div className="flex flex-col">
                   <p className="font-bold text-lg">Olivia Jacobs</p>
                   <p>Lifestyle Influencer</p>
                 </div>
                 <CustomImage src="/expand.svg" />
-              </div>
+              </Flex>
             </div>
           </div>
           <Menu
@@ -129,7 +133,7 @@ const Sidebar = () => {
               View All
             </Button>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col ">
             <CampaignShortcuts
               image="/campaign1.png"
               text="TechGuru Tech Review Series"
@@ -152,7 +156,7 @@ const Sidebar = () => {
             />
           </div>
         </div>
-      </div>
+      </Flex>
     </div>
   );
 };

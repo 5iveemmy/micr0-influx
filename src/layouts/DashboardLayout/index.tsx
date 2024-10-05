@@ -10,19 +10,11 @@ interface Props {
 
 const DashboardLayout = ({ children }: Props) => {
   return (
-    <Layout style={{ height: `calc(100vh + 44px)` }}>
+    <Layout className="lg:h-[calc(100vh+44px)]">
       <Sidebar />
 
       <Layout className="lg:ml-80 bg-#FAFAFA min-h-full">
-        {/* <div
-          className={`${
-            noHeader ? "hidden" : "flex"
-          } justify-end items-center px-10 py-4`}
-        >
-          <h2>ayoo</h2>
-        </div> */}
-
-        <Content className="pl-6 pt-10 pr-10">{children}</Content>
+        <Content className="px-4 md:pl-6 py-10 md:pr-10 ">{children}</Content>
       </Layout>
     </Layout>
   );
