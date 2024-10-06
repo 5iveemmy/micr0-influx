@@ -6,19 +6,27 @@ interface Props {
   label?: string;
   placeholder?: string;
   rows?: number;
+  error?: string;
+  touched?: boolean;
 }
 
 const { TextArea } = Input;
 
-const CustomTextArea = ({ name, label, placeholder, rows = 4 }: Props) => {
+const CustomTextArea = ({
+  name,
+  touched,
+  error,
+  label,
+  placeholder,
+  rows = 4,
+}: Props) => {
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) => (
         <Form.Item
           label={label && <>{label}</>}
-          validateStatus={
-            form.touched[name] && form.errors[name] ? "error" : ""
-          }
+          validateStatus={touched && error ? "error" : ""}
+          help={touched && error ? error : ""}
         >
           <TextArea
             {...field}
@@ -27,6 +35,7 @@ const CustomTextArea = ({ name, label, placeholder, rows = 4 }: Props) => {
             onChange={(e) => form.setFieldValue(name, e.target.value)}
             onBlur={() => form.setFieldTouched(name, true)}
             value={field.value}
+            status={error && touched ? "error" : ""}
           />
         </Form.Item>
       )}

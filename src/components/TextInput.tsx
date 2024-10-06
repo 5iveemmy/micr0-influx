@@ -6,23 +6,35 @@ interface Props {
   label?: string;
   placeholder?: string;
   type?: string;
+  error?: string;
+  touched?: boolean;
 }
 
-const TextInput = ({ name, label, type, placeholder }: Props) => {
+const TextInput = ({
+  name,
+  label,
+  touched,
+  error,
+  type,
+  placeholder,
+}: Props) => {
   return (
     <Field name={name}>
-      {({ field, form }: FieldProps) => (
+      {({ field }: FieldProps) => (
         <Form.Item
           label={label && <>{label}</>}
-          validateStatus={
-            form.touched[name] && form.errors[name] ? "error" : ""
-          }
+          validateStatus={touched && error ? "error" : ""}
+          help={touched && error ? error : ""}
         >
           <Input
             {...field}
             type={type}
             placeholder={placeholder}
-            style={{ height: "46px", borderColor: "#9D9D9D" }}
+            style={{
+              height: "46px",
+              borderColor: ` ${!touched && !error && "#9D9D9D"}  `,
+            }}
+            status={error && touched ? "error" : ""}
           />
         </Form.Item>
       )}
