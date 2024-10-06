@@ -27,7 +27,7 @@ const CampaignShortcuts = ({ image, text }: CampaignShortcutsProps) => (
       }}
       src={image}
     />
-    <p className=" truncate max-w-[180px]">{text}</p>
+    <p className="truncate max-w-[180px]">{text}</p>
     <CustomImage src="/arrowRight.svg" />
   </Flex>
 );

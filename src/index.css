@@ -69,6 +69,10 @@
   font-family: "Neue Montreal";
 }
 
+body {
+  background-color: #fafafa;
+}
+
 p,
 li,
 h1,

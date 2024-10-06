@@ -6,6 +6,9 @@ import { Formik } from "formik";
 import CustomSelectInput from "./CustomSelect";
 import CustomTextArea from "./CustomTextArea";
 import * as Yup from "yup";
+import { Campaign } from "@/type";
+import CustomImage from "./CustomImage";
+import { getRandomColor } from "@/utils";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Campaign title is required"),
@@ -21,8 +24,22 @@ const validationSchema = Yup.object().shape({
     ),
 });
 
-const CreateCampaign = () => {
+const socialMediaChannels = [
+  { id: "instagram", icon: "/insta.svg", fadedIcon: "/fadedInsta.svg" },
+  { id: "tiktok", icon: "/tiktok.svg", fadedIcon: "/fadedTiktok.svg" },
+  { id: "youtube", icon: "/youtube.svg", fadedIcon: "/fadedYoutube.svg" },
+  { id: "twitter", icon: "/twitter.svg", fadedIcon: "/fadedTwitter.svg" },
+  { id: "facebook", icon: "/facebook.svg", fadedIcon: "/fadedFacebook.svg" },
+];
+
+interface Props {
+  addCampaign: (campaign: Campaign) => void;
+}
+
+const CreateCampaign = ({ addCampaign }: Props) => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
 
   const showModal = () => {
     setOpen(true);
@@ -31,6 +48,44 @@ const CreateCampaign = () => {
   const onClose = () => {
     setOpen(false);
   };
+
+  const handleChannelClick = (channel: string) => {
+    setSelectedChannels((prev) =>
+      prev.includes(channel)
+        ? prev.filter((item) => item !== channel)
+        : [...prev, channel]
+    );
+  };
+
+  const handleCreateCampaign = (values: any) => {
+    const campaignPayload = {
+      ...values,
+      channels: selectedChannels,
+      avatarColor: getRandomColor(),
+    };
+
+    setLoading(true);
+    setTimeout(() => {
+      addCampaign(campaignPayload);
+      setLoading(false);
+      onClose();
+    }, 1000);
+  };
+
+  const items = [
+    {
+      label: "Entertainment",
+      value: "Entertainment",
+    },
+    {
+      label: "Movie",
+      value: "Movie",
+    },
+    {
+      label: "Games",
+      value: "Games",
+    },
+  ];
 
   return (
     <>
@@ -56,20 +111,16 @@ const CreateCampaign = () => {
         <Formik
           validationSchema={validationSchema}
           initialValues={{
-            title: "john",
+            title: "",
             brand: "",
             category: "",
             description: "",
             minBudget: "",
             maxBudget: "",
           }}
-          onSubmit={(values) => {
-            console.log(values, "values");
-          }}
+          onSubmit={handleCreateCampaign}
         >
           {({ handleSubmit, errors, touched, isValid, dirty }) => {
-            console.log(errors, "errors");
-            console.log(touched, "errors");
             return (
               <Form onFinish={handleSubmit} layout="vertical">
                 <TextInput
@@ -88,7 +139,7 @@ const CreateCampaign = () => {
                 <CustomSelectInput
                   name="category"
                   label="Campaign Category"
-                  options={[{ label: "Category", value: "Category" }]}
+                  options={items}
                   error={errors.category}
                   touched={touched.category}
                 />
@@ -100,6 +151,29 @@ const CreateCampaign = () => {
                   error={errors.description}
                   touched={touched.description}
                 />
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-2 text-[#053559] ">
+                    Select Preferred Channel
+                  </label>
+                  <div className="flex gap-2 items-center">
+                    {socialMediaChannels.map((channel) => (
+                      <div
+                        key={channel.id}
+                        onClick={() => handleChannelClick(channel.id)}
+                        className="cursor-pointer"
+                      >
+                        <CustomImage
+                          width={48}
+                          src={
+                            selectedChannels.includes(channel.id)
+                              ? channel.icon
+                              : channel.fadedIcon
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <TextInput
                   type="number"
                   name="minBudget"
@@ -118,6 +192,7 @@ const CreateCampaign = () => {
                 <Flex justify="center">
                   <Button
                     disabled={!isValid || !dirty}
+                    loading={loading}
                     htmlType="submit"
                     style={{
                       backgroundColor: "#053559",
