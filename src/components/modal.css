@@ -1,6 +1,6 @@
 @media (max-width: 767px) {
   :where(.css-dev-only-do-not-override-xs4f4s).ant-modal {
-    top: 0;
+    top: 0 !important;
     width: 100% !important;
     max-width: none !important;
     margin: 0px !important;
