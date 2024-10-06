@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { Campaign } from "@/type";
 import CustomImage from "./CustomImage";
 import { getRandomColor } from "@/utils";
+import "./modal.css";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Campaign title is required"),
@@ -102,10 +103,15 @@ const CreateCampaign = ({ addCampaign }: Props) => {
         Create a New Campaign
       </Button>
       <Modal
-        title="Create a New Campaign"
+        className="responsive-modal"
+        title={
+          <h1 className="text-[#053559] text-xl font-medium">
+            Create a New Campaign
+          </h1>
+        }
         open={open}
         onCancel={onClose}
-        width={720}
+        width={655}
         footer={null}
       >
         <Formik
