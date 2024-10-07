@@ -238,11 +238,14 @@ const Dashboard = () => {
           />
         </div>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <Flex
+          justify="space-between"
+          className="flex-wrap gap-4 flex-col md:flex-row pt-4"
+        >
           {filteredCampaigns.map((campaign) => (
             <CampaignBox key={campaign.title} {...campaign} />
           ))}
-        </section>
+        </Flex>
       </section>
     </main>
   );
